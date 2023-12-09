@@ -1,8 +1,8 @@
 class Token {
     private TokenType token;
-    private String value;
+    private Object value;
 
-    Token(TokenType token, String value) {
+    Token(TokenType token, Object value) {
         this.token = token;
         this.value = value;
     }
