@@ -1,6 +1,8 @@
+package "";
+
 enum TokenType {
     NUMBER,
     PLUS, MINUS, STAR, DIVIDE,
     LPAREN, RPAREN, EQUAL,
-    EOF
+    EOF, LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE
 }

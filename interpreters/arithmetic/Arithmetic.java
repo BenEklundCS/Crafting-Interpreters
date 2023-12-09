@@ -7,7 +7,7 @@ class Arithmetic {
     public static void main(String[] args) {
         ArrayList<Token> tokens_a = new Scanner("2+24").scanner();
         ArrayList<Token> tokens_b = new Scanner("10/2*3000-100").scanner();
-        ArrayList<Token> tokens_c = new Scanner("(10+2)/2=6.12").scanner();
+        ArrayList<Token> tokens_c = new Scanner("(10.5+6.1=16.611111").scanner();
         System.out.println(tokens_a);
         System.out.println(tokens_b);
         System.out.println(tokens_c);
