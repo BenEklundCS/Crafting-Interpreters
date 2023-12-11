@@ -1,21 +1,22 @@
-package com.craftinginterpreters.lox;
+package src.com.craftinginterpreters.lox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
-import static com.craftinginterpreters.lox.TokenType.*;
+import static src.com.craftinginterpreters.lox.Lox.*;
+import static src.com.craftinginterpreters.lox.TokenType.*;
 
 public class Scanner {
     private final String source; // String of source code
-    private final List<Token> tokens = new ArrayList<>(); // Array of tokens we'll build from source code
+    private final ArrayList<Token> tokens = new ArrayList<>(); // Array of tokens we'll build from source code
 
     Scanner(String source) {
         this.source = source;
     }
 
-    List<Token> scanTokens() {
+    ArrayList<Token> scanTokens() {
         // Consume tokens until isAtEnd is true
         while (!isAtEnd()) {
             start = current;
@@ -147,7 +148,7 @@ public class Scanner {
             return;
         }
         advance();
-        String value = source.substring(current + 1, current - 1);
+        String value = source.substring(start + 1, current - 1);
         addToken(STRING, value);
     }
 

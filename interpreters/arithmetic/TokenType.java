@@ -1,4 +1,4 @@
-package "";
+package interpreters.arithmetic;
 
 enum TokenType {
     NUMBER,

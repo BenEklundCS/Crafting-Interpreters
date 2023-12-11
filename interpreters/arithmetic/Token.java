@@ -1,3 +1,5 @@
+package interpreters.arithmetic;
+
 class Token {
     private TokenType token;
     private Object value;

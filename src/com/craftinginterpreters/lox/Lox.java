@@ -1,9 +1,10 @@
-package com.craftinginterpreters.lox;
+package src.com.craftinginterpreters.lox;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class Lox {
 

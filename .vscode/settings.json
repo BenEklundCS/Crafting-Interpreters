@@ -1,8 +1,5 @@
 {
     "java.project.sourcePaths": [
-        "lox/com.craftinginterpreters.lox",
-        "interpreters/arithmetic",
-        "book/lox/com/craftinginterpreters/lox",
-        "book/lox"
+        ""
     ]
 }
