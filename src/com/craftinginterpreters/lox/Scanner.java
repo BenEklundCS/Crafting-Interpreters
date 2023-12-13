@@ -2,7 +2,6 @@ package src.com.craftinginterpreters.lox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.Map;
 
 import static src.com.craftinginterpreters.lox.Lox.*;
@@ -50,7 +49,10 @@ public class Scanner {
             case ';': addToken(SEMICOLON); break;
             case '/':
                 if (match('/')) {
-                    while (peek() != '\n' && !isAtEnd()) advance();
+                    comment();
+                }
+                else if (match('*')) {
+                    blockComment();
                 }
                 else {
                     addToken(SLASH); break;
@@ -87,7 +89,7 @@ public class Scanner {
                     identifier();
                 }
                 else {
-                    Lox.error(line, "Unexpected character");
+                    error(line, "Unexpected character");
                 }
                 break;
         }
@@ -144,7 +146,7 @@ public class Scanner {
             advance();
         }
         if (isAtEnd()) {
-            Lox.error(line, "Unterminated string literal.");
+            error(line, "Unterminated string literal.");
             return;
         }
         advance();
@@ -168,6 +170,21 @@ public class Scanner {
         TokenType type = keywords.get(text);
         if (type == null) type = IDENTIFIER;
         addToken(type);
+    }
+
+    private void comment() {
+        while (peek() != '\n' && !isAtEnd()) advance();
+    }
+
+    private void blockComment() {
+        while(!isAtEnd()) {
+            advance();
+            if (peek() == '*' && peekNext() == '/') {
+                advance(); // consume the *
+                advance(); // consume the /
+                break;  // break out of MLC loop
+            }
+        }
     }
 
     // Keywords

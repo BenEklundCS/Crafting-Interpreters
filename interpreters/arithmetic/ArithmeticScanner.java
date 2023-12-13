@@ -2,13 +2,15 @@ package interpreters.arithmetic;
 
 import java.util.ArrayList;
 
-class Scanner {
+import static interpreters.arithmetic.TokenType.*;
+
+class ArithmeticScanner {
     private String source;
     private int start = 0;
     private int current = 0;
     private ArrayList<Token> tokens = new ArrayList<Token>();
 
-    Scanner(String source) {
+    ArithmeticScanner(String source) {
         this.source = source;
     }
 
@@ -18,13 +20,13 @@ class Scanner {
             char c = advance();
             // Handle single char tokens
             switch(c) {
-                case '+': addToken(TokenType.PLUS, "+"); break;
-                case '-': addToken(TokenType.MINUS, "-"); break;
-                case '*': addToken(TokenType.STAR, "*"); break;
-                case '/': addToken(TokenType.DIVIDE, "/"); break;
-                case '(': addToken(TokenType.LPAREN, "("); break;
-                case ')': addToken(TokenType.RPAREN, ")"); break;
-                case '=': addToken(TokenType.EQUAL, "="); break;
+                case '+': addToken(PLUS, "+"); break;
+                case '-': addToken(MINUS, "-"); break;
+                case '*': addToken(MULTIPLY, "*"); break;
+                case '/': addToken(DIVIDE, "/"); break;
+                case '(': addToken(LPAREN, "("); break;
+                case ')': addToken(RPAREN, ")"); break;
+                case '=': addToken(EQUAL, "="); break;
                 default:
                     // Handle numbers
                     if (isDigit(c)) {
