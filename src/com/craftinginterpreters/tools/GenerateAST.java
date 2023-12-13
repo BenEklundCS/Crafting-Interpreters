@@ -1,22 +1,23 @@
-package com.craftinginterpreters.tools;
+package src.com.craftinginterpreters.tools;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.List;
 
 public class GenerateAST {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if (args.length != 1) {
             System.err.println("Usage: generate_ast <output directory>");
             System.exit(64);
-
-            String outputDir = args[0];
+        }
+        String outputDir = args[0];
             defineAst(outputDir, "Expr", Arrays.asList(
             "Binary   : Expr left, Token operator, Expr right",
             "Grouping : Expr, expression",
             "Literal  : Object value",
             "Unary    : Token operator, Expr right"
         ));
-        }
     }
     private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {
         String path = outputDir + "/" + baseName + ".java";
@@ -44,5 +45,25 @@ public class GenerateAST {
         writer.close();
     }
 
-    private static void defineType();
+    private static void defineType(PrintWriter writer, String baseName, String className, String fieldList) {
+        writer.println("    static class " + className + " extends " + baseName + " {");
+
+        // Constructor
+        writer.println("    " + className + "(" + fieldList + ") {");
+
+        // Store params in fields
+        String[] fields = fieldList.split(", ");
+        for (String field : fields) {
+            String name = field.split(" ")[1];
+            writer.println("    this." + name + " = " + name + ";");
+        }
+        writer.println("    }");
+
+        // Fields
+        writer.println();
+        for (String field : fields) {
+            writer.println("    final " + field + ";");
+        }
+        writer.println(" }");
+    }
 }
