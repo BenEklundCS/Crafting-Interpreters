@@ -1,6 +1,6 @@
-package src.com.craftinginterpreters.lox;
+package com.craftinginterpreters.lox;
 
-import src.com.craftinginterpreters.lox.TokenType;
+import com.craftinginterpreters.lox.TokenType;
 
 public class Token {
     final TokenType type;

@@ -1,4 +1,4 @@
-package src.com.craftinginterpreters.lox;
+package com.craftinginterpreters.lox;
 
 import java.io.*;
 import java.nio.charset.Charset;
