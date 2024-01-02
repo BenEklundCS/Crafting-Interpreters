@@ -64,21 +64,22 @@ public class Scanner {
             case '\r':
             case '\t':
                 break;
+                // Igored, but increments the line counter
             case '\n':
                 line++;
                 break;
             // Conditional singles
             case '!':
-                addToken(match('=') ? BANG_EQUAL : BANG);
+                addToken(match('=') ? BANG_EQUAL : BANG); // !=
                 break;
             case '=':
-                addToken(match('=') ? EQUAL_EQUAL : EQUAL);
+                addToken(match('=') ? EQUAL_EQUAL : EQUAL); // ==
                 break;
             case '>':
-                addToken(match('=') ? GREATER_EQUAL : GREATER);
+                addToken(match('=') ? GREATER_EQUAL : GREATER); // >=
                 break;
             case '<':
-                addToken(match('=') ? LESS_EQUAL : LESS);
+                addToken(match('=') ? LESS_EQUAL : LESS); // <=
                 // Literals
             case '"': string(); break;
             default:

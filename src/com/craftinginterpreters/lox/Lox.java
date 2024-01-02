@@ -22,12 +22,14 @@ public class Lox {
             runPrompt();
         }
     }
+    
     // Scan from input file
     private static void runFile(String path) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
         if (hadError) System.exit(65);
     }
+
     // Scan from cmd line
     private static void runPrompt() throws IOException {
         InputStreamReader input = new InputStreamReader(System.in);
@@ -45,11 +47,17 @@ public class Lox {
     private static void run(String source) {
         Scanner scanner = new Scanner(source);
         ArrayList<Token> tokens = scanner.scanTokens();
-
-        // Print the tokens
+        
+        /* Print the tokens
         for (Token token : tokens) {
             System.out.println(token);
         }
+        */
+
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+        if (hadError) return;
+        System.out.println(new ASTPrinter().print(expression));
     }
 
     static void error(int line, String message) {
@@ -60,6 +68,15 @@ public class Lox {
         System.err.println(
                 "[line " + line + "] Error" + where + ": " + message);
         hadError = true;
+    }
+
+    static void error(Token token, String message) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, " at end", message);
+        }
+        else {
+            report(token.line, " at '" + token.lexeme + "'", message);
+        }
     }
 
 }
