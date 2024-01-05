@@ -3,6 +3,8 @@ package com.craftinginterpreters.lox;
 import java.util.List;
 import static com.craftinginterpreters.lox.TokenType.*;
 
+// Recursive descent parser
+
 public class Parser {
     private final List<Token> tokens;
     private int current = 0;
@@ -155,6 +157,4 @@ public class Parser {
             advance();
         }
     }
-
-    
 }

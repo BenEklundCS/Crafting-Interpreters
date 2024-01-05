@@ -1,6 +1,5 @@
 package com.craftinginterpreters.lox;
 
-@Deprecated // Just used to demo Visitor Pattern implementation
 public class ASTPrinter implements Expr.Visitor<String> {
 
     public static void main(String[] args) {

@@ -80,7 +80,8 @@ public class Scanner {
                 break;
             case '<':
                 addToken(match('=') ? LESS_EQUAL : LESS); // <=
-                // Literals
+            
+            // Literals
             case '"': string(); break;
             default:
                 if (isDigit(c)) {
@@ -94,7 +95,7 @@ public class Scanner {
                 }
                 break;
         }
-    }
+    }                               
 
     private char advance() {
         return source.charAt(current++);

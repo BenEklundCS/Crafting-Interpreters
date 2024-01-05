@@ -9,13 +9,13 @@ public class Token {
     final int line;
 
     Token(TokenType type, String lexeme, Object literal, int line) {
-        this.type = type;
-        this.lexeme = lexeme;
-        this.literal = literal;
+        this.type = type; // eg. STRING
+        this.lexeme = lexeme; // eg. "Hello world!"
+        this.literal = literal; // eg. Hello world!
         this.line = line;
     }
 
     public String toString() {
-        return type + " " + lexeme + " " + literal;
+        return type + " " + lexeme + " " + literal; // STRING "Hello world!" Hello world! // TYPE LEXEME LITERAL
     }
 }
