@@ -50,7 +50,6 @@ public class Parser {
 
     private Expr term() {
         Expr expr = factor();
-
         while (match(MINUS, PLUS)) {
             Token operator = previous();
             Expr right = factor();
