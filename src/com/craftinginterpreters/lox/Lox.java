@@ -5,12 +5,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Lox {
 
     private static final Interpreter interpreter = new Interpreter();
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
+    static boolean debug = false;
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -54,17 +56,38 @@ public class Lox {
     // Run the line
         // Common method for running a string of source code
     private static void run(String source) {
+        if (debug) {
+            debugMode(source);
+        }
+        else {
+            normalMode(source);
+        }
+    }
+
+    private static void normalMode(String source) {
+        Scanner scanner = new Scanner(source);
+        ArrayList<Token> tokens = scanner.scanTokens();
+        Parser parser = new Parser(tokens);
+        List<Stmt> stmtList = parser.parse();
+        // single expression
+        if (hadError) return;
+        interpreter.interpret(stmtList);
+    }
+    private static void debugMode(String source) {
         // Scanner class converts a String of source code into an ArrayList of Tokens using the scanTokens method
+        System.out.println("\n::SOURCE CODE::");
+        System.out.println(source);
         Scanner scanner = new Scanner(source);
         ArrayList<Token> tokens = scanner.scanTokens();
         // Can also use printTheTokens() to show all tokens in run if needed
-        //printTheTokens(tokens);
+        System.out.println("\n::SCANNED TOKENS::");
+        printTheTokens(tokens);
         // Parser class converts an ArrayList of tokens to a parsed expression using recursive descent parsing
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> stmtList = parser.parse();
         if (hadError) return;
-        interpreter.interpret(expression);
-        //System.out.println(new ASTPrinter().print(expression));
+        System.out.println("\n::INTERPRETED EXPRESSION::");
+        interpreter.interpret(stmtList);
     }
 
     @Deprecated

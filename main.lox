@@ -1,0 +1,13 @@
+var a = 1;
+
+while (true) {
+    print a;
+    a = a + 1;
+    break;
+}
+
+while (true) {
+    print "hello";
+    break;
+    print "two";
+}

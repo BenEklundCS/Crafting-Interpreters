@@ -80,6 +80,7 @@ public class Scanner {
                 break;
             case '<':
                 addToken(match('=') ? LESS_EQUAL : LESS); // <=
+                break;
             
             // Literals
             case '"': string(); break;
@@ -211,6 +212,7 @@ public class Scanner {
         keywords.put("true", TRUE);
         keywords.put("var", VAR);
         keywords.put("while", WHILE);
+        keywords.put("break", BREAK);
     }
 
 }

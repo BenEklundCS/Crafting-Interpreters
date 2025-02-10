@@ -16,10 +16,23 @@ public class GenerateAST {
 
         String outputDir = "src/com/craftinginterpreters/lox";
         defineAst(outputDir, "Expr", Arrays.asList(
+                "Assign   : Token name, Expr value",
                 "Binary   : Expr left, Token operator, Expr right",
                 "Grouping : Expr expression",
                 "Literal  : Object value",
+                "Variable : Token name",
+                "Logical  : Expr left, Token operator, Expr right",
                 "Unary    : Token operator, Expr right"
+        ));
+
+        defineAst(outputDir, "Stmt", Arrays.asList(
+                "Block      : List<Stmt> statements",
+                "Expression : Expr expression",
+                "If         : Expr condition, Stmt thenBranch," + " Stmt elseBranch",
+                "Var        : Token name, Expr initializer",
+                "Print      : Expr expression",
+                "Break      : Expr expression",
+                "While      : Expr condition, Stmt body"
         ));
     }
     private static void defineAst(
