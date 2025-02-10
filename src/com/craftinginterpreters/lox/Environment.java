@@ -3,15 +3,15 @@ package com.craftinginterpreters.lox;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Enviornment {
+public class Environment {
     private final Map<String, Object> values = new HashMap<>();
-    final Enviornment enclosing;
+    Environment enclosing;
 
-    Enviornment() {
+    Environment() {
         enclosing = null;
     }
 
-    Enviornment(Enviornment enclosing) {
+    Environment(Environment enclosing) {
         this.enclosing = enclosing;
     }
 
