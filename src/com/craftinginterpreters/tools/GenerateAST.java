@@ -31,7 +31,7 @@ public class GenerateAST {
                 "If         : Expr condition, Stmt thenBranch," + " Stmt elseBranch",
                 "Var        : Token name, Expr initializer",
                 "Print      : Expr expression",
-                "Break      : Expr expression",
+                "Break      : ",
                 "While      : Expr condition, Stmt body"
         ));
     }
@@ -79,38 +79,39 @@ public class GenerateAST {
         writer.println("}");
     }
 
-    private static void defineType(
-            PrintWriter writer, String baseName,
-            String className, String fieldList) {
-        writer.println("  static class " + className + " extends " +
-                baseName + " {");
+private static void defineType(
+    PrintWriter writer, String baseName, String className, String fieldList) {
+    writer.println("  static class " + className + " extends " + baseName + " {");
 
-        // Constructor.
+    // If there are no fields at all (e.g. "Break : ")
+    if (fieldList.isBlank()) {
+        // Zero-arg constructor
+        writer.println("    " + className + "() {}");
+    } else {
+        // Otherwise, generate a normal constructor
         writer.println("    " + className + "(" + fieldList + ") {");
 
-        // Store parameters in fields.
         String[] fields = fieldList.split(", ");
         for (String field : fields) {
             String name = field.split(" ")[1];
             writer.println("      this." + name + " = " + name + ";");
         }
-
-        writer.println("    }");
-        
-        // The Visitor Pattern
-        writer.println();
-        writer.println("    @Override");
-        writer.println("    <R> R accept(Visitor<R> visitor) {");
-        writer.println("    return visitor.visit" +
-            className + baseName + "(this);");
         writer.println("    }");
 
-        // Fields.
+        // Declare the fields
         writer.println();
         for (String field : fields) {
             writer.println("    final " + field + ";");
         }
+    }
 
-        writer.println("  }");
+    // The Visitor pattern boilerplate
+    writer.println();
+    writer.println("    @Override");
+    writer.println("    <R> R accept(Visitor<R> visitor) {");
+    writer.println("        return visitor.visit" + className + baseName + "(this);");
+    writer.println("    }");
+
+    writer.println("  }");
     }
 }

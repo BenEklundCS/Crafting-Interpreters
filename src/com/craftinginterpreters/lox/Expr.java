@@ -18,13 +18,13 @@ abstract class Expr {
       this.value = value;
     }
 
-    @Override
-    <R> R accept(Visitor<R> visitor) {
-    return visitor.visitAssignExpr(this);
-    }
-
     final Token name;
     final Expr value;
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+        return visitor.visitAssignExpr(this);
+    }
   }
   static class Binary extends Expr {
     Binary(Expr left, Token operator, Expr right) {
@@ -33,50 +33,50 @@ abstract class Expr {
       this.right = right;
     }
 
-    @Override
-    <R> R accept(Visitor<R> visitor) {
-    return visitor.visitBinaryExpr(this);
-    }
-
     final Expr left;
     final Token operator;
     final Expr right;
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+        return visitor.visitBinaryExpr(this);
+    }
   }
   static class Grouping extends Expr {
     Grouping(Expr expression) {
       this.expression = expression;
     }
 
+    final Expr expression;
+
     @Override
     <R> R accept(Visitor<R> visitor) {
-    return visitor.visitGroupingExpr(this);
+        return visitor.visitGroupingExpr(this);
     }
-
-    final Expr expression;
   }
   static class Literal extends Expr {
     Literal(Object value) {
       this.value = value;
     }
 
+    final Object value;
+
     @Override
     <R> R accept(Visitor<R> visitor) {
-    return visitor.visitLiteralExpr(this);
+        return visitor.visitLiteralExpr(this);
     }
-
-    final Object value;
   }
   static class Variable extends Expr {
     Variable(Token name) {
       this.name = name;
     }
 
+    final Token name;
+
     @Override
     <R> R accept(Visitor<R> visitor) {
-    return visitor.visitVariableExpr(this);
+        return visitor.visitVariableExpr(this);
     }
-
-    final Token name;
   }
   static class Logical extends Expr {
     Logical(Expr left, Token operator, Expr right) {
@@ -85,14 +85,14 @@ abstract class Expr {
       this.right = right;
     }
 
-    @Override
-    <R> R accept(Visitor<R> visitor) {
-    return visitor.visitLogicalExpr(this);
-    }
-
     final Expr left;
     final Token operator;
     final Expr right;
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+        return visitor.visitLogicalExpr(this);
+    }
   }
   static class Unary extends Expr {
     Unary(Token operator, Expr right) {
@@ -100,13 +100,13 @@ abstract class Expr {
       this.right = right;
     }
 
-    @Override
-    <R> R accept(Visitor<R> visitor) {
-    return visitor.visitUnaryExpr(this);
-    }
-
     final Token operator;
     final Expr right;
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+        return visitor.visitUnaryExpr(this);
+    }
   }
 
     abstract <R> R accept(Visitor<R> visitor);

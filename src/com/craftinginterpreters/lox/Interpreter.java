@@ -3,7 +3,6 @@ package com.craftinginterpreters.lox;
 import com.craftinginterpreters.lox.Expr.Binary;
 import com.craftinginterpreters.lox.Expr.Grouping;
 import com.craftinginterpreters.lox.Expr.Unary;
-import com.craftinginterpreters.lox.Stmt.Break;
 
 import java.util.List;
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
@@ -23,7 +22,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     private void execute(Stmt stmt) {
         stmt.accept(this);
     }
-
 
 
     // Implemented in order of simplicity
@@ -64,7 +62,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object right = evaluate(expr.right);
 
         switch(expr.operator.type) {
-            case BANG:
+            case BANG, NOT:
                 return !isTruthy(right);
             case MINUS:
                 checkNumberOperand(expr.operator, right);
@@ -239,9 +237,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         return null;
     }
-
-
-
     static class BreakException extends RuntimeException {}
 
     @Override
