@@ -1,13 +1,5 @@
-var a = 1;
-
-while (true) {
-    print a;
-    a = a + 1;
-    break;
+fun add(a, b) {
+    print a + b;
 }
 
-while (true) {
-    print "hello";
-    break;
-    print "two";
-}
+print add(2, 4);
