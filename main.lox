@@ -1,5 +1,28 @@
-fun add(a, b) {
-    print a + b;
+// fib example
+/*
+fun fib(n) {
+    if (n <= 1) return n;
+    return fib(n - 2) + fib(n - 1);
 }
 
-print add(2, 4);
+for (var i = 0; i < 50; i = i + 1) {
+    var start = clock();
+    print i + "| " + fib(i);
+    var end = clock();
+    print("time to compute: " + (end - start));
+}
+*/
+
+fun makeCounter() {
+    var i = 0;
+    fun count() {
+        i = i + 1;
+        print i;
+    }
+    return count;
+}
+
+var counter = makeCounter();
+counter();
+counter();
+counter();

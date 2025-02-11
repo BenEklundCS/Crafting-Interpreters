@@ -1,6 +1,5 @@
 package com.craftinginterpreters.lox;
 
-import com.craftinginterpreters.LoxCallable;
 import com.craftinginterpreters.lox.Expr.Binary;
 import com.craftinginterpreters.lox.Expr.Grouping;
 import com.craftinginterpreters.lox.Expr.Unary;
@@ -15,21 +14,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     Interpreter() {
         // define global scope
-        globals.define("clock", new LoxCallable() {
-            @Override
-            public Object call(Interpreter interpreter, List<Object> arguments) {
-                return (double)System.currentTimeMillis() / 1000.0f;
-            }
-
-            @Override
-            public int arity() {
-                return 0;
-            }
-            @Override
-            public String toString() {
-                return "<native fn>";
-            }
-        });
+        StdLib.define(globals);
     }
 
     /**
@@ -212,8 +197,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitReturnStmt(Stmt.Return stmt) {
+        Object value = null;
+        if (stmt.value != value) value = evaluate(stmt.value);
+        throw new Return(value);
+    }
+
+    @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
-        LoxFunction function = new LoxFunction(stmt);
+        LoxFunction function = new LoxFunction(stmt, environment);
         environment.define(stmt.name.lexeme, function); // ✅ Store the function in the environment
         return null;
     }

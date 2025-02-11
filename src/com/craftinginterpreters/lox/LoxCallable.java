@@ -1,4 +1,4 @@
-package com.craftinginterpreters;
+package com.craftinginterpreters.lox;
 
 import com.craftinginterpreters.lox.Interpreter;
 

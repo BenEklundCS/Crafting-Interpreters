@@ -1,6 +1,5 @@
 package com.craftinginterpreters.lox;
 
-import com.craftinginterpreters.LoxCallable;
 import java.util.List;
 
 /**
@@ -9,13 +8,15 @@ import java.util.List;
  */
 public class LoxFunction implements LoxCallable {
     private final Stmt.Function declaration; // Stores the function declaration (name, parameters, body).
+    private final Environment closure;
 
     /**
      * Constructs a new LoxFunction from a function declaration statement.
      *
      * @param declaration The function declaration containing parameters and body.
      */
-    LoxFunction(Stmt.Function declaration) {
+    LoxFunction(Stmt.Function declaration, Environment closure) {
+        this.closure = closure;
         this.declaration = declaration;
     }
 
@@ -30,15 +31,19 @@ public class LoxFunction implements LoxCallable {
     public Object call(Interpreter interpreter, List<Object> arguments) {
         // Create a new environment for the function call.
         // It is nested inside the global environment to allow variable access.
-        Environment environment = new Environment(interpreter.globals);
-
+        Environment environment = new Environment(closure);
         // Bind each function parameter to its corresponding argument.
         for (int i = 0; i < declaration.params.size(); i++) {
             environment.define(declaration.params.get(i).lexeme, arguments.get(i));
         }
 
         // Execute the function body within this new environment.
-        interpreter.executeBlock(declaration.body, environment);
+        try {
+            interpreter.executeBlock(declaration.body, environment);
+        } catch (Return returnValue) {
+            return returnValue.value;
+        }
+
 
         // Currently, Lox functions always return null, since return statements aren't implemented yet.
         return null;
