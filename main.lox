@@ -1,28 +1,35 @@
 // fib example
+
 /*
 fun fib(n) {
     if (n <= 1) return n;
     return fib(n - 2) + fib(n - 1);
 }
 
-for (var i = 0; i < 50; i = i + 1) {
+for (var i = 0; i < 20; i = i + 1) {
     var start = clock();
-    print i + "| " + fib(i);
+    print i + " | " + fib(i);
     var end = clock();
     print("time to compute: " + (end - start));
 }
-*/
+
 
 fun makeCounter() {
     var i = 0;
     fun count() {
         i = i + 1;
-        print i;
+        return i;
     }
     return count;
 }
 
 var counter = makeCounter();
-counter();
-counter();
-counter();
+for (var i = 0; i < 1000; i = i + 1) {
+    print(counter());
+}
+*/
+
+var a = "outer";
+{
+  var a = a;
+}

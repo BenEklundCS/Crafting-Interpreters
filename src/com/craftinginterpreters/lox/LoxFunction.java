@@ -44,7 +44,6 @@ public class LoxFunction implements LoxCallable {
             return returnValue.value;
         }
 
-
         // Currently, Lox functions always return null, since return statements aren't implemented yet.
         return null;
     }

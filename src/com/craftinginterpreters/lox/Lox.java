@@ -64,13 +64,20 @@ public class Lox {
     }
 
     private static void normalMode(String source) {
+        // scan source code to get tokens
         Scanner scanner = new Scanner(source);
         ArrayList<Token> tokens = scanner.scanTokens();
+        // parse tokens into AST
         Parser parser = new Parser(tokens);
-        List<Stmt> stmtList = parser.parse();
-        // single expression
+        List<Stmt> statements = parser.parse();
         if (hadError) return;
-        interpreter.interpret(stmtList);
+        // scan for variables and look for issues
+        Resolver resolver = new Resolver(interpreter);
+        resolver.resolve(statements);
+        // check for errors
+        if (hadError) return;
+        // interpret AST with tree walk interpreter
+        interpreter.interpret(statements);
     }
     private static void debugMode(String source) {
         // Scanner class converts a String of source code into an ArrayList of Tokens using the scanTokens method
