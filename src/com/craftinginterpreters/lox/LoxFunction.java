@@ -7,17 +7,26 @@ import java.util.List;
  * Implements the LoxCallable interface, making it callable like native functions.
  */
 public class LoxFunction implements LoxCallable {
+    private final boolean isInitializer;
     private final Stmt.Function declaration; // Stores the function declaration (name, parameters, body).
     private final Environment closure;
+
 
     /**
      * Constructs a new LoxFunction from a function declaration statement.
      *
      * @param declaration The function declaration containing parameters and body.
      */
-    LoxFunction(Stmt.Function declaration, Environment closure) {
+    LoxFunction(Stmt.Function declaration, Environment closure, boolean isInitializer) {
         this.closure = closure;
         this.declaration = declaration;
+        this.isInitializer = isInitializer;
+    }
+
+    LoxFunction bind(LoxInstance instance) {
+        Environment environment = new Environment(closure);
+        environment.define("this", instance);
+        return new LoxFunction(declaration, environment, isInitializer);
     }
 
     /**
@@ -41,6 +50,7 @@ public class LoxFunction implements LoxCallable {
         try {
             interpreter.executeBlock(declaration.body, environment);
         } catch (Return returnValue) {
+            if (isInitializer) return closure.getAt(0, "this");
             return returnValue.value;
         }
 

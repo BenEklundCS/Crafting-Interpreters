@@ -1,35 +1,15 @@
-// fib example
-
-/*
-fun fib(n) {
-    if (n <= 1) return n;
-    return fib(n - 2) + fib(n - 1);
-}
-
-for (var i = 0; i < 20; i = i + 1) {
-    var start = clock();
-    print i + " | " + fib(i);
-    var end = clock();
-    print("time to compute: " + (end - start));
-}
-
-
-fun makeCounter() {
-    var i = 0;
-    fun count() {
-        i = i + 1;
-        return i;
+class Doughnut {
+    cook() {
+        print "Fry until golden brown.";
     }
-    return count;
 }
 
-var counter = makeCounter();
-for (var i = 0; i < 1000; i = i + 1) {
-    print(counter());
+class BostonCream < Doughnut {
+    cook() {
+        super.cook();
+        print "Pipe full of custard and coat with chocolate.";
+    }
 }
-*/
 
-var a = "outer";
-{
-  var a = a;
-}
+BostonCream().cook();
+super.cook();
