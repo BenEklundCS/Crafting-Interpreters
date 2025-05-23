@@ -11,5 +11,6 @@ class BostonCream < Doughnut {
     }
 }
 
+// calls the cook method of the BostonCream class
 BostonCream().cook();
-super.cook();
+
